@@ -1,5 +1,5 @@
 [package]
-name = "test-soroban-auth"
+name = "soroban-authorization-contract"
 version = "0.0.0"
 edition = "2021"
 publish = false

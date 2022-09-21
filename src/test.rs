@@ -54,13 +54,28 @@ fn test_add_identity() {
 
     client.write_iden(
         &BytesN::from_array(&env, &[0; 32]),
-        &Bytes::from_array(&env, &[0, 4, 6]),
-        &Bytes::from_array(&env, &[0, 4, 6]),
+        &Bytes::from_array(&env, &[116, 100, 101, 112]), // "tdep"
+        &Bytes::from_array(
+            &env,
+            &[
+                65, 32, 100, 101, 118, 101, 108, 111, 112, 101, 114, 32, 116, 104, 97, 116, 32, 98,
+                117, 105, 108, 100, 32, 115, 116, 117, 102, 102,
+            ],
+        ), // "A developer that build stuff"
         &vec![
             &env,
             Link {
-                descr: Bytes::from_array(&env, &[0, 4, 6]),
-                link: Bytes::from_array(&env, &[0, 4, 6]),
+                descr: Bytes::from_array(
+                    &env,
+                    &[112, 101, 114, 115, 111, 110, 97, 108, 32, 98, 108, 111, 103],
+                ), // "personal blog"
+                link: Bytes::from_array(
+                    &env,
+                    &[
+                        104, 116, 116, 112, 115, 58, 47, 47, 104, 101, 121, 116, 100, 101, 112, 46,
+                        103, 105, 116, 104, 117, 98, 46, 105, 111, 47,
+                    ],
+                ), // "https://heytdep.github.io/"
             },
         ],
         &sig,
@@ -68,5 +83,5 @@ fn test_add_identity() {
     );
 
     let iden = client.get_iden(&BytesN::from_array(&env, &[0; 32]));
-    assert_eq!(iden.descr, Bytes::from_array(&env, &[0, 4, 6]));
+    assert_eq!(iden.name, Bytes::from_array(&env, &[116, 100, 101, 112]));
 }
