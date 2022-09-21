@@ -3,44 +3,14 @@
 #[cfg(feature = "testutils")]
 extern crate std;
 
+mod storage;
 mod test;
 
 use soroban_auth::{
     check_auth, NonceAuth, {Identifier, Signature},
 };
-use soroban_sdk::{contractimpl, contracttype, symbol, BigInt, Bytes, BytesN, Env, IntoVal, Vec};
-
-#[contracttype]
-pub enum DataKey {
-    Registered(BytesN<32>),
-    Nonce(Identifier),
-    Admin,
-}
-
-#[contracttype]
-pub struct Link {
-    pub descr: Bytes,
-    pub link: Bytes,
-}
-
-#[contracttype]
-pub struct Identity {
-    pub name: Bytes,
-    pub descr: Bytes,
-    pub links: Vec<Link>,
-    pub admin: Identifier,
-}
-
-impl Identity {
-    fn new(name: Bytes, descr: Bytes, links: Vec<Link>, admin: Identifier) -> Self {
-        Identity {
-            name,
-            descr,
-            links,
-            admin,
-        }
-    }
-}
+use soroban_sdk::{contractimpl, symbol, BigInt, Bytes, BytesN, Env, IntoVal, Vec};
+use storage::{DataKey, Identity, Link};
 
 // Signature stuff
 
